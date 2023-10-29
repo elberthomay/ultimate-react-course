@@ -23,7 +23,6 @@ export default function App() {
 
 function Steps({ isOpen }) {
   const [step, setStep] = useState(0);
-
   const incrStep = () => setStep((prev) => (prev + 1) % 3);
   const decrStep = () => setStep((prev) => (prev - 1 + 3) % 3);
 
@@ -37,22 +36,26 @@ function Steps({ isOpen }) {
         </div>
         <div className="message">{`Step ${step + 1}: ${messages[step]}`}</div>
         <div className="buttons">
-          <button
-            style={{ backgroundColor: "#7950f2", color: "#fff" }}
-            className="btn"
-            onClick={decrStep}
-          >
-            Previous
-          </button>
-          <button
-            style={{ backgroundColor: "#7950f2", color: "#fff" }}
-            className="btn"
-            onClick={incrStep}
-          >
-            Next
-          </button>
+          <Button bgColor={"#7950f2"} color={"#fff"} onClick={decrStep}>
+            <span>👈</span>Previous
+          </Button>
+          <Button bgColor={"#7950f2"} color={"#fff"} onClick={incrStep}>
+            Next<span>👉</span>
+          </Button>
         </div>
       </div>
     )
+  );
+}
+
+function Button({ bgColor, color, onClick, children }) {
+  return (
+    <button
+      style={{ backgroundColor: bgColor, color: color }}
+      className="btn"
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }
