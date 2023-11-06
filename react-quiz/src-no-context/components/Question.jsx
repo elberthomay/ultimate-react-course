@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { useQuiz } from "../contexts/QuizContext";
 
-export default function Question() {
-  const { questions, index, answered, handleAnswer, handleAddScore } =
-    useQuiz();
-  const { question, options, correctOption, points } = questions[index];
-
+export default function Question({ exam, answered, onAnswer, onCorrect }) {
+  const { question, options, correctOption, points } = exam;
   function handleSelect(option) {
-    if (option === correctOption) handleAddScore(points);
-    handleAnswer();
+    if (option === correctOption) onCorrect(points);
+    onAnswer();
   }
   return (
     <div>

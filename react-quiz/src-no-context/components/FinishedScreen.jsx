@@ -1,8 +1,4 @@
-import { useQuiz } from "../contexts/QuizContext";
-
-function FinishedScreen() {
-  const { maxScore, score, highScore, handleReturn } = useQuiz();
-
+function FinishedScreen({ score, highScore, maxScore, onReset }) {
   const percentage = Math.ceil((score / maxScore) * 100);
   let emoji;
   if (percentage === 100) emoji = "🤩";
@@ -19,7 +15,7 @@ function FinishedScreen() {
         {emoji}
       </p>
       <p className="highscore">Highscore: {highScore} points</p>
-      <button className="btn btn-ui" onClick={handleReturn}>
+      <button className="btn btn-ui" onClick={onReset}>
         Try Again
       </button>
     </>
