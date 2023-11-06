@@ -1,6 +1,11 @@
 import styles from "./CountryList.module.css";
 import CountryItem from "./CountryItem";
-function CountryList({ isLoading, cities }) {
+import { useCities } from "../contexts/CitiesContext";
+function CountryList() {
+  const {
+    cities: { isLoading, cities },
+  } = useCities();
+
   const countrySet = new Set();
   const countries = cities.reduce((countries, city) => {
     if (countrySet.has(city.country)) return countries;

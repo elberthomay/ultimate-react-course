@@ -1,7 +1,11 @@
 import { useState } from "react";
 
 export default function useFetch(
-  url,
+  inputFunction = (fetchData) => () => ({
+    url: "",
+    method: "GET",
+    body: undefined,
+  }),
   initialData = null,
   callback = (data) => data,
   signal = undefined
@@ -10,13 +14,17 @@ export default function useFetch(
   const [error, setError] = useState(null);
   const [data, setData] = useState(initialData);
 
-  async function fetchData() {
+  async function fetchData({
+    url,
+    method = "GET",
+    body = undefined,
+    headers = undefined,
+  }) {
     setIsLoading(true);
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, { method, body, headers });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
         setData(callback(data));
       } else throw new Error("FetchError");
     } catch (err) {
@@ -26,5 +34,5 @@ export default function useFetch(
     }
   }
 
-  return [isLoading, error, data, fetchData];
+  return [isLoading, error, data, inputFunction(fetchData)];
 }
