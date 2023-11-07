@@ -1,24 +1,26 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 
 const CitiesContext = createContext();
 
+const citiesInputFunction = (fetchData) => () =>
+  fetchData({ url: "http://localhost:8000/cities" });
+
+const currentCityInput = (fetchData) => (id) =>
+  fetchData({ url: `http://localhost:8000/cities/${id}` });
+
 export function CitiesProvider({ children }) {
   const [citiesIsLoading, citiesError, cities, fetchCities] = useFetch(
-    (fetchData) => () => fetchData({ url: "http://localhost:8000/cities" }),
+    citiesInputFunction,
     []
   );
 
   const [currentCityIsLoading, currentCityError, currentCity, getcurrentCity] =
-    useFetch(
-      (fetchData) => (id) =>
-        fetchData({ url: `http://localhost:8000/cities/${id}` }),
-      null
-    );
+    useFetch(currentCityInput, null);
 
   useEffect(() => {
     fetchCities();
-  }, []);
+  }, [fetchCities]);
 
   return (
     <CitiesContext.Provider

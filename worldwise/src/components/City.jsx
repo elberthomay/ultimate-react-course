@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { useCities } from "../contexts/CitiesContext";
 import { useEffect } from "react";
@@ -22,14 +22,14 @@ function City() {
 
   useEffect(() => {
     getcurrentCity(id);
-  }, [id]);
+  }, [id, getcurrentCity]);
 
   useEffect(() => {
     if (error && !isLoading) {
       const intervalId = setInterval(() => getcurrentCity(id), 2000);
       return () => clearInterval(intervalId);
     }
-  }, [isLoading, error, id]);
+  }, [isLoading, error, id, getcurrentCity]);
 
   const { cityName, emoji, date, notes } = currentCity ?? {
     cityName: "",
