@@ -12,7 +12,7 @@ export default {
         sans: "Roboto Mono, monospace",
       },
       height: {
-        screen: "100 dvh",
+        screen: "100dvh",
       },
     },
   },

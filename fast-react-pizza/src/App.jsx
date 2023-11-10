@@ -7,9 +7,9 @@ import Order, { loader as orderLoader } from "./features/order/Order";
 import CreateOrder, {
   action as orderCreateAction,
 } from "./features/order/CreateOrder";
+import { action as orderUpdateAction } from "./features/order/UpdateOrder";
 import AppLayout from "./features/ui/AppLayout";
 import Error from "./features/ui/Error";
-import SearchOrder from "./features/order/SearchOrder";
 
 const router = createBrowserRouter([
   {
@@ -36,14 +36,11 @@ const router = createBrowserRouter([
         action: orderCreateAction,
       },
       {
-        path: "/order/",
-        element: <SearchOrder />,
-      },
-      {
         path: "/order/:orderId",
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
+        action: orderUpdateAction,
       },
     ],
   },
